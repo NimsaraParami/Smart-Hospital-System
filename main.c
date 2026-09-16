@@ -4,6 +4,11 @@
 #define BEDS 20
 #define SPECIALTIES 4
 
+void displayMenu();
+void registerPatient();
+void allocateBed(int patientIndex);
+void calculateBilling(int patientIndex);
+void displayHospitalStatus();
 
 char specialtyName[SPECIALTIES][30]={"General Practice(OPD)","Paediatrics","Cardiology","Neurology"};
 double baseFee[SPECIALTIES]={1500.00,2500.00,4500.00,5000.00};
@@ -22,7 +27,7 @@ int isAdmittedWard[MAXPATIENTS];
 int selectedWard[MAXPATIENTS];
 int assignedBed[MAXPATIENTS];
 int daysAdmitted[MAXPATIENTS];
-int specialtyWaitingCount[MAXPATIENTS];
+int specialtyWaitingCount[SPECIALTIES]={0};
 double waitingTime[MAXPATIENTS];
 double emergencySurcharge[MAXPATIENTS];
 double wardStayCost[MAXPATIENTS];
