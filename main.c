@@ -15,6 +15,7 @@ int bedCapacity[WARDS]={20,10,10,5};
 int bedOccupancy[WARDS][BEDS]={0};
 
 
+
 void displaySpecialties(){
   int i;
   printf("\n---------------------------------------------------------------------------------------------------\n");
