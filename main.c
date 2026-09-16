@@ -1,7 +1,9 @@
 #include<stdio.h>
-
+#define MAXPATIENTS 100
 #define WARDS 4
 #define BEDS 20
+#define SPECIALTIES 4
+
 
 char specialtyName[4][30]={"General Practice(OPD)","Paediatrics","Cardiology","Neurology"};
 double baseFee[4]={1500.00,2500.00,4500.00,5000.00};
@@ -11,6 +13,7 @@ char wardName[4][40]={"General Ward","Paediatric Ward","Surgical Ward","ICU(Inen
 double dailyBedRate[4]={3000.00,6000.00,12000.00,25000.00};
 int bedCapacity[4]={20,10,10,5};
 int bedOccupancy[4][20]={0};
+
 
 void displaySpecialties(){
   int i;
@@ -63,3 +66,4 @@ int main()
 
     return 0;
 }
+
