@@ -14,6 +14,22 @@ double dailyBedRate[WARDS]={3000.00,6000.00,12000.00,25000.00};
 int bedCapacity[WARDS]={20,10,10,5};
 int bedOccupancy[WARDS][BEDS]={0};
 
+char patientName[MAXPATIENTS][50];
+int patientAge[MAXPATIENTS];
+int urgencyLevel[MAXPATIENTS];
+int selectedSpecialty[MAXPATIENTS];
+int isAdmittedWard[MAXPATIENTS];
+int selectedWard[MAXPATIENTS];
+int assignedBed[MAXPATIENTS];
+int daysAdmitted[MAXPATIENTS];
+int specialtyWaitingCount[MAXPATIENTS];
+double waitingTime[MAXPATIENTS];
+double emergencySurcharge[MAXPATIENTS];
+double wardStayCost[MAXPATIENTS];
+double grossTotal[MAXPATIENTS];
+double ageDiscount[MAXPATIENTS];
+double finalAmount[MAXPATIENTS];
+int patientCount=0;
 
 
 void displaySpecialties(){
