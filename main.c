@@ -4,6 +4,9 @@
 #define BEDS 20
 #define SPECIALTIES 4
 
+void displaySpecialties();
+void displayWards();
+void displayBeds();
 void displayMenu();
 void registerPatient();
 void allocateBed(int patientIndex);
@@ -80,12 +83,48 @@ void displayBeds(){
         }
      }
 }
-int main()
-{
-    displaySpecialties();
-    displayWards();
-    displayBeds();
-
-    return 0;
+void displayMenu(){
+     printf("\n=================================================================================================\n");
+     printf("                            SMART HOSPITAL PATIENT ALLOCATION                                      \n");
+     printf("===================================================================================================\n");
+     printf("1.Register New Patient Intake\n");
+     printf("2.Allocate Ward Bed To Patient\n");
+     printf("3.Calculate & Display Patient Bill\n");
+     printf("4.Display Hospital Occupancy & System Status\n");
+     printf("5.Exit System\n");
+     printf("Enter Your Choice (1-5):");
 }
-
+int main(){
+    int choice=0;
+    while (choice!=5){
+        displayMenu();
+        if(scanf("%d",&choice)!=1){
+            printf("Invalid input! Please enter a number\n");
+            while (getchar()!='\n');
+            continue;
+        }
+    switch (choice){
+     case 1:
+        printf("\n[Patient Intake Selected]\n");
+        break;
+     case 2:
+        printf("\n[Bed Allocation Selected]\n");
+        break;
+     case 3:
+        printf("\n[Billing Calculation Selected]\n");
+        break;
+     case 4:
+        printf("\n[Hospital Status Selected]\n");
+        displaySpecialties();
+        displayWards();
+        displayBeds();
+        break;
+     case 5:
+        printf("\nExiting System.GOOD BYE!\n");
+        break;
+     default:
+         printf("\n INVALID CHOICE!Please selected between 1 and 5\n");
+    }
+  }
+  return 0;
+}
