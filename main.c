@@ -5,14 +5,14 @@
 #define SPECIALTIES 4
 
 
-char specialtyName[4][30]={"General Practice(OPD)","Paediatrics","Cardiology","Neurology"};
-double baseFee[4]={1500.00,2500.00,4500.00,5000.00};
-int consultationTime[4]={15,20,30,30};
-int dailyPatientCap[4]={30,20,12,10};
-char wardName[4][40]={"General Ward","Paediatric Ward","Surgical Ward","ICU(Inensive Care Unit)"};
-double dailyBedRate[4]={3000.00,6000.00,12000.00,25000.00};
-int bedCapacity[4]={20,10,10,5};
-int bedOccupancy[4][20]={0};
+char specialtyName[SPECIALTIES][30]={"General Practice(OPD)","Paediatrics","Cardiology","Neurology"};
+double baseFee[SPECIALTIES]={1500.00,2500.00,4500.00,5000.00};
+int consultationTime[SPECIALTIES]={15,20,30,30};
+int dailyPatientCap[SPECIALTIES]={30,20,12,10};
+char wardName[WARDS][40]={"General Ward","Paediatric Ward","Surgical Ward","ICU(Inensive Care Unit)"};
+double dailyBedRate[WARDS]={3000.00,6000.00,12000.00,25000.00};
+int bedCapacity[WARDS]={20,10,10,5};
+int bedOccupancy[WARDS][BEDS]={0};
 
 
 void displaySpecialties(){
