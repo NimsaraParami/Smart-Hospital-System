@@ -9,7 +9,7 @@ void displayWards();
 void displayBeds();
 void displayMenu();
 void registerPatient();
-void allocateBed(int patientIndex);
+void allocateBed();
 void calculateBilling(int patientIndex);
 void displayHospitalStatus();
 
@@ -117,6 +117,56 @@ void registerPatient(){
 
      patientCount++;
 }
+void allocateBed(){
+     int patientID,wardChoice,j;
+     if(patientCount == 0){
+        printf("\n No Patients Registered Yet!\n");
+        return;
+     }
+     printf("\n------------------------------------WARD BED ALLOCATION------------------------------------------\n");
+     printf("Enter Patient ID:",patientCount);
+     scanf("%d",&patientID);
+     patientID--;
+
+     if(patientID<0 || patientID >= patientCount){
+        printf("INVALID PATIENT ID!\n");
+        return;
+     }
+     if(isAdmittedWard[patientID]==1){
+        printf("Patient is already admitted to a ward!\n");
+        return;
+     }
+     displayWards();
+     printf("\nSelect Ward For Admission(1-4):");
+     scanf("%d",&wardChoice);
+     wardChoice--;
+     if(wardChoice<0 || wardChoice>=WARDS){
+            printf("Invalid Ward Selection!\n");
+            return;
+     }
+     int bedFound = -1;
+     for(j=0;j<bedCapacity[wardChoice];j++){
+        if(bedOccupancy[wardChoice][j]==0){
+            bedFound = j;
+            break;
+        }
+     }
+     if(bedFound == -1){
+        printf("\nSelected Ward Is currently full!\n");
+        return;
+     }
+     printf("Enter number of estimated stay days:");
+     scanf("%d",&daysAdmitted[patientID]);
+
+     bedOccupancy[wardChoice][bedFound]=1;
+     isAdmittedWard[patientID]=1;
+     selectedWard[patientID]= wardChoice;
+     assignedBed[patientID] = bedFound;
+
+     printf("\nBed Allocated Successfully!\n");
+     printf("Patient: %s | Ward:%s | Bed No:%d | Days: %d\n",patientName[patientID],wardName[wardChoice],bedFound+1,daysAdmitted[patientID]);
+}
+
 
 void displayMenu(){
      printf("\n=================================================================================================\n");
@@ -143,7 +193,7 @@ int main(){
         registerPatient();
         break;
      case 2:
-        printf("\n[Bed Allocation Selected]\n");
+        allocateBed();
         break;
      case 3:
         printf("\n[Billing Calculation Selected]\n");
