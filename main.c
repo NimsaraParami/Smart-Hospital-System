@@ -83,6 +83,41 @@ void displayBeds(){
         }
      }
 }
+void registerPatient(){
+     if(patientCount>=MAXPATIENTS){
+        printf("\nHospital capacity is full!\n");
+        return;
+     }
+     printf("\n---------------------------------NEW PATIENT REGISTRATION----------------------------------------\n");
+     printf("Enter Patient Name:");
+     scanf("%s",patientName[patientCount]);
+     printf("Enter Patient Age:");
+     scanf("%d",&patientAge[patientCount]);
+     displaySpecialties();
+     printf("\nSelect Doctor Specialty (1-4):");
+     scanf("%d",&selectedSpecialty[patientCount]);
+     selectedSpecialty[patientCount]--;
+
+     int spec=selectedSpecialty[patientCount];
+     if (specialtyWaitingCount[spec]>= dailyPatientCap[spec]){
+        printf("\nDaily limit reached for this specialty!\n");
+        return;
+     }
+     printf("Enter Emergency Level (1:Normal 2: Urgent 3:Critical):");
+     scanf("%d",&urgencyLevel[patientCount]);
+     waitingTime[patientCount]=specialtyWaitingCount[spec]* consultationTime[spec];
+     specialtyWaitingCount[spec]++;
+
+     isAdmittedWard[patientCount]=0;
+     selectedWard[patientCount]= -1;
+     assignedBed[patientCount]= -1;
+     daysAdmitted[patientCount]= 0;
+     printf("\nPatient Registered Successfully!\n");
+     printf("Patient ID: %D | Estimated Wait Time:%.0f mins\n", patientCount+1,waitingTime[patientCount]);
+
+     patientCount++;
+}
+
 void displayMenu(){
      printf("\n=================================================================================================\n");
      printf("                            SMART HOSPITAL PATIENT ALLOCATION                                      \n");
@@ -105,7 +140,7 @@ int main(){
         }
     switch (choice){
      case 1:
-        printf("\n[Patient Intake Selected]\n");
+        registerPatient();
         break;
      case 2:
         printf("\n[Bed Allocation Selected]\n");
@@ -128,3 +163,4 @@ int main(){
   }
   return 0;
 }
+
