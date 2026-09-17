@@ -10,7 +10,7 @@ void displayBeds();
 void displayMenu();
 void registerPatient();
 void allocateBed();
-void calculateBilling(int patientIndex);
+void calculateBilling();
 void displayHospitalStatus();
 void dusplayPatientsByPriority();
 void searchPatient();
@@ -211,14 +211,14 @@ for(i=0;i<patientCount;i++){
 
 void searchPatient(){
      if(patientCount == 0){
-        printf("\n[ERROR] No patient registered in the system yet!\n");
+        printf("\nNo patient registered in the system yet!\n");
         return;
      }
      int searchId=0;
      printf("\nEnter Patient ID to search(1 to %d ):",patientCount);
      scanf("%d",&searchId);
      if(searchId<1 || searchId>patientCount){
-        printf("[ERROR]Invalid Patient ID! Out of Bound\n");
+        printf("Invalid Patient ID! Out of Bound\n");
         return;
      }
      int index= searchId-1;
@@ -229,6 +229,44 @@ void searchPatient(){
      printf("Specialty Code  :%d\n",selectedSpecialty[index]);
      printf("Emergency Level :%d\n",emergencyLevel[index]);
 }
+void calculateBilling(){
+     if(patientCount == 0){
+        printf("\nNo patients registered in the system yet!\n");
+        return;
+     }
+     int patientId = 0;
+     printf("\nEnter Patient ID to calculate bill(1 to %d):",patientCount);
+     scanf("%d",&patientId);
+
+     if (patientId < 1 || patientId > patientCount){
+        printf("Invalid Patient ID!Out of bounds.\n");
+        return;
+     }
+     int days=0;
+     do{
+        printf("Enter number of days admitted(1-365):");
+        scanf("%d",&days);
+        if(days<1 || days > 365){
+            printf("Invalid duration!Please enter days between 1 and 365\n");
+        }
+     }while(days<1 || days>365);
+     float dailyRate = 2500.00;
+     float totalBill = days * dailyRate;
+
+     int discountRate = 10;
+     if(discountRate!=0){
+        float discount = (totalBill * discountRate)/100;
+        totalBill -= discount;
+     }
+     printf("\n=========================================================================================================\n");
+     printf("\n                                           PATIENT BILL DETAILS                                            ");
+     printf("\n=========================================================================================================\n");
+     printf("\nPatient ID                      : %d",patientId);
+     printf("\nDays Admitted                   : %d",days);
+     printf("\nTotal Amount                    : Rs.%.2f",totalBill);
+     printf("\n=========================================================================================================\n");
+}
+
 
 void displayMenu(){
      printf("\n==================================================================================================\n");
@@ -259,6 +297,7 @@ int main(){
         break;
      case 3:
         printf("\n[Billing Calculation Selected]\n");
+        calculateBilling();
         break;
      case 4:
         printf("\n[Hospital Status Selected]\n");
