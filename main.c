@@ -12,6 +12,7 @@ void registerPatient();
 void allocateBed();
 void calculateBilling(int patientIndex);
 void displayHospitalStatus();
+void dusplayPatientsByPriority();
 
 char specialtyName[SPECIALTIES][30]={"General Practice(OPD)","Paediatrics","Cardiology","Neurology"};
 double baseFee[SPECIALTIES]={1500.00,2500.00,4500.00,5000.00};
@@ -30,6 +31,7 @@ int isAdmittedWard[MAXPATIENTS];
 int selectedWard[MAXPATIENTS];
 int assignedBed[MAXPATIENTS];
 int daysAdmitted[MAXPATIENTS];
+int emergencyLevel[MAXPATIENTS];
 int specialtyWaitingCount[SPECIALTIES]={0};
 double waitingTime[MAXPATIENTS];
 double emergencySurcharge[MAXPATIENTS];
@@ -167,11 +169,49 @@ void allocateBed(){
      printf("Patient: %s | Ward:%s | Bed No:%d | Days: %d\n",patientName[patientID],wardName[wardChoice],bedFound+1,daysAdmitted[patientID]);
 }
 
+void displayPatientsByPriority(){
+int i,j;
+if(patientCount == 0){
+    printf("\nNo patients registered yet!\n");
+    return;
+}
+int indexList[MAXPATIENTS];
+for(i=0;i<patientCount;i++){
+    indexList[i]=i;
+}
+for(i=0;i<patientCount-1;i++){
+    for(j=0;i<patientCount-i-1;j++){
+        if(emergencyLevel[indexList[j]]<emergencyLevel[indexList[j+1]]){
+            int temp= indexList[j];
+            indexList[j]=indexList[j+1];
+            indexList[j+1]=temp;
+        }
+    }
+}
+printf("\n==================================================================================================================================\n");
+printf("                                          PATIENT PRIORITY LIST (BY URGENCY)                                                        \n");
+printf("\n==================================================================================================================================\n");
+printf("%10s %20s %10s %24s %18s\n","Patient ID" , "Patient Name" , "Age" , "Specialty" , "Emergency Status");
+printf("----------------------------------------------------------------------------------------------------------------------------------\n");
+for(i=0;i<patientCount;i++){
+    int idx=indexList[i];
+    printf("%10d %20s %10d %25s",idx+1,patientName[idx],patientAge[idx],specialtyName[selectedSpecialty[idx]]);
+
+    if(emergencyLevel[idx] == 3){
+        printf("%15s\n","3-Critical");
+    }else if (emergencyLevel[idx] == 2){
+        printf("%15s\n","2-Urgent");
+    }else{
+        printf("%15s\n","1-Normal");
+    }
+  }
+  printf("===================================================================================================================================\n");
+}
 
 void displayMenu(){
-     printf("\n=================================================================================================\n");
+     printf("\n==================================================================================================\n");
      printf("                            SMART HOSPITAL PATIENT ALLOCATION                                      \n");
-     printf("===================================================================================================\n");
+     printf("==================================================================================================\n");
      printf("1.Register New Patient Intake\n");
      printf("2.Allocate Ward Bed To Patient\n");
      printf("3.Calculate & Display Patient Bill\n");
@@ -203,6 +243,7 @@ int main(){
         displaySpecialties();
         displayWards();
         displayBeds();
+        displayPatientsByPriority();
         break;
      case 5:
         printf("\nExiting System.GOOD BYE!\n");
