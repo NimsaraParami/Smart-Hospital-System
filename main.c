@@ -14,6 +14,7 @@ void calculateBilling();
 void displayHospitalStatus();
 void dusplayPatientsByPriority();
 void searchPatient();
+void cleanExit();
 
 char specialtyName[SPECIALTIES][30]={"General Practice(OPD)","Paediatrics","Cardiology","Neurology"};
 double baseFee[SPECIALTIES]={1500.00,2500.00,4500.00,5000.00};
@@ -266,6 +267,12 @@ void calculateBilling(){
      printf("\nTotal Amount                    : Rs.%.2f",totalBill);
      printf("\n=========================================================================================================\n");
 }
+void cleanExit(){
+     printf("\n=========================================================================================================\n");
+     printf("\n                                    Exiting Smart Hospital System                                          ");
+     printf("\n                                   Thank you for using our system!                                        \n");
+     printf("\n=========================================================================================================\n");
+}
 
 
 void displayMenu(){
@@ -309,6 +316,7 @@ int main(){
         break;
      case 5:
         printf("\nExiting System.GOOD BYE!\n");
+        cleanExit();
         break;
      default:
          printf("\n INVALID CHOICE!Please selected between 1 and 5\n");
