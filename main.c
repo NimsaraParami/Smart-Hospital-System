@@ -13,6 +13,7 @@ void allocateBed();
 void calculateBilling(int patientIndex);
 void displayHospitalStatus();
 void dusplayPatientsByPriority();
+void searchPatient();
 
 char specialtyName[SPECIALTIES][30]={"General Practice(OPD)","Paediatrics","Cardiology","Neurology"};
 double baseFee[SPECIALTIES]={1500.00,2500.00,4500.00,5000.00};
@@ -115,7 +116,7 @@ void registerPatient(){
      assignedBed[patientCount]= -1;
      daysAdmitted[patientCount]= 0;
      printf("\nPatient Registered Successfully!\n");
-     printf("Patient ID: %D | Estimated Wait Time:%.0f mins\n", patientCount+1,waitingTime[patientCount]);
+     printf("Patient ID: %d | Estimated Wait Time:%.0f mins\n", patientCount+1,waitingTime[patientCount]);
 
      patientCount++;
 }
@@ -126,7 +127,7 @@ void allocateBed(){
         return;
      }
      printf("\n------------------------------------WARD BED ALLOCATION------------------------------------------\n");
-     printf("Enter Patient ID:",patientCount);
+     printf("Enter Patient ID(1 to %d):",patientCount);
      scanf("%d",&patientID);
      patientID--;
 
@@ -208,6 +209,27 @@ for(i=0;i<patientCount;i++){
   printf("===================================================================================================================================\n");
 }
 
+void searchPatient(){
+     if(patientCount == 0){
+        printf("\n[ERROR] No patient registered in the system yet!\n");
+        return;
+     }
+     int searchId=0;
+     printf("\nEnter Patient ID to search(1 to %d ):",patientCount);
+     scanf("%d",&searchId);
+     if(searchId<1 || searchId>patientCount){
+        printf("[ERROR]Invalid Patient ID! Out of Bound\n");
+        return;
+     }
+     int index= searchId-1;
+     printf("\n----------PATIENT DETAILS-------\n");
+     printf("Patient ID      :%d\n",searchId);
+     printf("Name            :%s\n",patientName[index]);
+     printf("Age             :%d\n",patientAge[index]);
+     printf("Specialty Code  :%d\n",selectedSpecialty[index]);
+     printf("Emergency Level :%d\n",emergencyLevel[index]);
+}
+
 void displayMenu(){
      printf("\n==================================================================================================\n");
      printf("                            SMART HOSPITAL PATIENT ALLOCATION                                      \n");
@@ -244,6 +266,7 @@ int main(){
         displayWards();
         displayBeds();
         displayPatientsByPriority();
+        searchPatient();
         break;
      case 5:
         printf("\nExiting System.GOOD BYE!\n");
