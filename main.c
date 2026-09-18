@@ -17,6 +17,7 @@ void displayHospitalStatus();
 void dusplayPatientsByPriority();
 void searchPatient();
 void cleanExit();
+void generateAnalyticsReport();
 
 char specialtyName[SPECIALTIES][30]={"General Practice(OPD)","Paediatrics","Cardiology","Neurology"};
 double baseFee[SPECIALTIES]={1500.00,2500.00,4500.00,5000.00};
@@ -307,6 +308,51 @@ void calculateBilling(){
      printf("\nEstimated Waiting Time             : %.2f mins %s",waitingTime[index],(waitingTime[index]==0) ? "(Immediate Attention)" : "");
      printf("\n=========================================================================================================\n");
 }
+
+void generateAnalyticsReport(){
+     if (patientCount == 0){
+        printf("\nNo data available for analytics report!\n");
+        return;
+     }
+     int level1=0,level2=0,level3=0;
+     double totalRevenue=0.0,totalDiscount = 0;
+     int highestIndex=0;
+     double maxBill=0.0;
+
+     for(int i=0;i< patientCount;i++){
+        if(urgencyLevel[i]== 1)level1++;
+        else if (urgencyLevel[i]== 2) level2++;
+        else if (urgencyLevel[i]== 3)level3++;
+
+
+        double currentBaseFee=baseFee[selectedSpecialty[i]];
+        double surCharge =(urgencyLevel[i] == 2) ? currentBaseFee * 0.20 : (urgencyLevel[i] == 3)? currentBaseFee * 0.50:0.0;
+        double gross= currentBaseFee+ surCharge;
+        double discount =(patientAge[i]<5 || patientAge[i]>65)? gross * 0.15:0.0;
+        double finalBill = gross - discount;
+
+        totalRevenue += finalBill;
+        totalDiscount+= discount ;
+        if(finalBill > maxBill){
+            maxBill = finalBill;
+            highestIndex = i;
+        }
+     }
+     printf("\n=====================================================================================================================\n");
+     printf("\n                                     PERFORMANCE REPORT & ANALYTICS                                                  \n");
+     printf("\n=====================================================================================================================\n");
+     printf("\n1.Patient by Urgency Level:");
+     printf("\n  - Normal   (Level 1)                : %d",level1);
+     printf("\n  - Urgent   (Level 2)                : %d",level2);
+     printf("\n  - Critical (Level 3)                : %d",level3);
+     printf("\n2. Total Revenue Earned               : LKR %.2f", totalRevenue);
+     printf("\n3. Total Discount Given               : LKR %.2f", totalDiscount);
+     printf("\n4. Highest Paying Patient             :");
+     printf("\n   -Name: %s | Total Bill: LKR %.2f", patientName[highestIndex],maxBill);
+     printf("\n=====================================================================================================================\n");
+}
+
+
 void cleanExit(){
      printf("\n=========================================================================================================\n");
      printf("\n                                    Exiting Smart Hospital System                                          ");
