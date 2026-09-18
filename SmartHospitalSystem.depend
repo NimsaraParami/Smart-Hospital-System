@@ -1,4 +1,5 @@
 # depslib dependency file v1.0
-1789669230 source:c:\users\dell\desktop\sdf-project\sdf-project\smarthospitalsystem\main.c
+1789745546 source:c:\users\dell\desktop\sdf-project\sdf-project\smarthospitalsystem\main.c
 	<stdio.h>
+	<string.h>
 
